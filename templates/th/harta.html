@@ -1,0 +1,67 @@
+<div id="harta_d" style="height: 400px;"></div>
+<script>
+    var colt1 = L.latLng(45.202621, 28.758803),
+    colt2 = L.latLng(45.147076, 28.831587),
+    limite = L.latLngBounds(colt1, colt2);
+    var mymap = L.map('harta_d', {
+      reuseTiles: true, 
+      maxBounds: limite,
+    }).setView([{{lat}}, {{lng}}], 15);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'River Wolves Treasure Hunt',
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        minZoom: 13,
+        accessToken: 'pk.eyJ1IjoiY2hpcnVzbWluYSIsImEiOiJja2FmNHcyZHAyNm1mMzZxd2J0MjBocTJ4In0.r6elrc1DnUeFMkvIGl7tGw'
+    }).addTo(mymap);
+    var varpop = L.marker([0, 0]).addTo(mymap);
+    varpop.bindPopup("Locatia ta").openPopup();
+    var cerc = L.circle([{{lat}}, {{lng}}], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.1,
+        radius: {{raza}}
+    }).addTo(mymap);
+    cerc.bindPopup("Indiciu").openPopup();
+
+    getLocation();
+      var intervalId = setInterval(function() {
+          getLocation();
+      }, 6000);
+
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+
+      function sendpos(position) {
+        varpop.setLatLng([position.coords.latitude, position.coords.longitude]).update();
+        ws.send("%coord%"+position.coords.latitude+","+position.coords.longitude+","+position.coords.accuracy)
+      }
+      function error(err) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+              alert("Locatia trebuie sa fie activata si confirmata pentru a putea inregistra prezenta")
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert("Locatia nu este valabila. Asigura-te ca o ai activata.")
+              break;
+            case error.TIMEOUT:
+              alert("Request-ul a expirat. Incearca din nou.")
+              break;
+            case error.UNKNOWN_ERROR:
+              alert("A aparut o eroare neasteptata. Incearca din nou.")
+              break;
+          }
+      }
+      function getLocation() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(sendpos, error, options);
+          } else {
+              alert("Browserul nu poate obtine locatia")
+          }
+      }
+  
+</script>

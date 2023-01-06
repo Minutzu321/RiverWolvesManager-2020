@@ -1,0 +1,676 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='img/apple-icon.png')}}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png')}}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+      River Wolves
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/rvw.css')}}" rel="stylesheet" />
+  </head>
+  <body class="index-page sidebar-collapse">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
+      <div class="container">
+        <div class="navbar-translate">
+          <a class="navbar-brand" target="_blank" href="http://liceulmoisil.ro" rel="tooltip" title="Liceul Teoretic Grigore Moisil Tulcea" data-placement="bottom">
+            LTGM
+          </a>
+          <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar top-bar"></span>
+            <span class="navbar-toggler-bar middle-bar"></span>
+            <span class="navbar-toggler-bar bottom-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link btn btn-neutral" href="/">
+                <i class="now-ui-icons arrows-1_share-66"></i>
+                <p>Pagina principala</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+  
+    <!-- Header -->
+    <div class="wrapper">
+      <div class="page-header clear-filter" filter-color="purple">
+        <div class="page-header-image" data-parallax="true" style="background-image:url('{{ url_for('static', filename='img/header.jpg')}}');">
+        </div>
+        <div class="container">
+          <div class="content-center brand">
+            <img class="rvw-logo" src="{{ url_for('static', filename='img/logo-contur.png')}}" alt="">
+            <h1 class="h1-seo">River Wolves</h1>
+            <h3>Team management system</h3>
+            <h5>Welcome, {{displayname}}</h5>
+            <br>
+            <img src="{{ url_for('static', filename='img/minerva.png')}}" class="locali-logo-minerva" />
+          </div>
+        </div>
+      </div>
+      <!-- End Header -->
+  
+      <div class="main">
+  
+        <div class="section section-tabs">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 ml-auto col-xl-12 mr-auto">
+                <div class="card">
+                  <div class="card-header">
+                    <p></p>
+                    <ul class="nav nav-pills nav-pills-just-icons nav-pills-primary justify-content-center" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#general" role="tab">
+                          <i class="now-ui-icons clothes_tie-bow"></i>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#profil" role="tab">
+                          <i class="now-ui-icons business_badge"></i>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#stats" role="tab">
+                          <i class="now-ui-icons business_chart-pie-36"></i>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tasks" role="tab">
+                          <i class="now-ui-icons design_vector"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+                    <!-- Tab panes -->
+                    <div class="tab-content text-center">
+                      <div class="tab-pane active" id="general" role="tabpanel">
+                        <h2>General</h2>
+                        {% if interese %}
+                        <div class="card text-center">
+                          <div class="card-header mt-2">
+                            Interese
+                          </div>
+                          <div class="card-body">
+                            <h4 class="card-title">Bifeaza interesele tale</h4>
+                            <p class="card-text">Pentru a evita monotonia si plictiseala in atributiile tale, selecteaza mai jos lucrurile care ti se par interesante</p>
+                            <form id="interesep">
+                              <div class="form-check">
+                                {% for interes in interese %}
+                                <label class="form-check-label">
+                                  <input class="form-check-input" type="checkbox" name="{{interes}}">
+                                  <span class="form-check-sign"></span>
+                                  {{interes}}
+                                </label><p class="small"></p>
+                                {% endfor %}
+                              </div>
+                              <button type="submit" class="btn btn-primary btn-round btn-lg btn-block col-md-4 ml-auto mr-auto">Salveaza</button>
+                            </form>
+                          </div>
+                        </div>
+                        {% endif %}
+                      <div id="rvw_genfeed">
+                      </div>
+                      </div>
+
+                      <div class="tab-pane" id="profil" role="tabpanel">
+                        <h2>Profil</h2>
+                        
+                        <form class="form" id="subprofil">
+                          <span>Nume</span>
+                          <div class="input-group no-border input-lg text-center col-md-4 ml-auto mr-auto">
+                            <input name="rvw_nume" type="text" placeholder="Nume" class="form-control" value="{{ username }}" disabled>
+                          </div>
+
+                          <span>Email</span>
+                          <div class="input-group no-border input-lg text-center col-md-4 ml-auto mr-auto">
+                            <input name="rvw_email" type="email" placeholder="Email" class="form-control" value="{{ email }}" disabled>
+                          </div>
+
+                          <span>Numar de telefon</span>
+                          <div class="input-group no-border input-lg text-center col-md-4 ml-auto mr-auto">
+                            <input name="rvw_telefon" type="text" placeholder="Numar de telefon" class="form-control" value="{{ telefon }}">
+                          </div>
+
+                          <span>Rol</span>
+                          <div class="input-group no-border input-lg text-center col-md-4 ml-auto mr-auto">
+                            <input name="rvw_rol" type="text" placeholder="Rolul in echipa" class="form-control" value="{{ rol }}" disabled>
+                          </div>
+
+                          <span>Nickname/Numele scurt</span>
+                          <div class="input-group no-border input-lg text-center col-md-4 ml-auto mr-auto">
+                            <input name="rvw_porecla" type="text" placeholder="Nickname" class="form-control" value="{{ porecla }}">
+                          </div>
+
+                          <span>Descriere</span>
+                          <div class="input-group no-border input-lg text-center col-md-8 ml-auto mr-auto">
+                            <textarea name="rvw_desc" type="text" placeholder="Descrierea ta" class="form-control" rows="6">{{ desc }}</textarea>
+                          </div>
+                          <div class="input-group no-border input-lg text-center col-md-4 ml-auto mr-auto">
+                            <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">Salveaza</button>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="tab-pane" id="stats" role="tabpanel">
+                        <h2>Membri</h2>  
+                        <div class="row">
+                        {{ mems|safe }}
+                        </div>
+                      </div>
+                      <div class="tab-pane" id="tasks" role="tabpanel">
+                        <h2>Taskuri</h2>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-10 ml-auto col-xl-10 mr-auto">
+                              {% if lvl >= 3 %}
+                              <button class="btn btn-primary btn-round btn-lg btn-block" data-toggle="modal" data-target="#addTask">Adauga un task</button>
+                              <br>
+                              {% endif %}
+                              <div id="task_holder" class="col-md-10 ml-auto col-xl-10 mr-auto"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%if lvl >= 3%}
+      <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="addTaskLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header justify-content-center">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <i class="now-ui-icons ui-1_simple-remove"></i>
+              </button>
+              <h4 class="title title-up">Adauga un task</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form" id="tasksub">
+                <div class="input-group no-border input-lg text-center col-md-12 ml-auto mr-auto">
+                  <input name="rvw_nume_task" type="text" placeholder="Nume Task" class="form-control" required autocomplete="off">
+                </div>
+                <div class="input-group no-border input-lg text-center col-md-12 ml-auto mr-auto">
+                  <textarea name="rvw_desc_task" type="text" placeholder="Descriere task" class="form-control" rows="6"></textarea>
+                </div>
+                <div class="input-group no-border input-lg text-center col-md-12 ml-auto mr-auto">
+                  <input name="rvw_term_task" type="text" class="form-control date-picker" placeholder="Termen limita" data-datepicker-color="primary" required autocomplete="off">
+                </div>
+                  <span>Desemneaza participanti</span>
+                <div class="form-check">
+                  {% for i in range(nume_membri_list|length) %}
+                  <label class="form-check-label">
+                    <input name="{{ nume_membri_list[i] }}" class="form-check-input" type="checkbox">
+                    <span class="form-check-sign"></span>
+                    {{ nume_membri_list[i] }}
+                  </label>
+                    {% if i != nume_membri_list|length-1 %}
+                    <hr>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="sub_task()">Adauga</button>
+              <button id="anuleaza" type="button" class="btn btn-danger" data-dismiss="modal">Anuleaza</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="editTask" tabindex="-1" role="dialog" aria-labelledby="editTaskLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header justify-content-center">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <i class="now-ui-icons ui-1_simple-remove"></i>
+              </button>
+              <h4 class="title title-up">Editeaza task-ul</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form" id="taskedit">
+                <input id="uid_etask" name="rvw_uid_etask" hidden>
+                <input id="prog_etask" name="rvw_prog_etask" hidden>
+                <div class="input-group no-border input-lg text-center col-md-12 ml-auto mr-auto">
+                  <input id="nume_etask" name="rvw_nume_etask" type="text" placeholder="Nume Task" class="form-control" required autocomplete="off">
+                </div>
+                <div class="input-group no-border input-lg text-center col-md-12 ml-auto mr-auto">
+                  <textarea id="desc_etask" name="rvw_desc_etask" type="text" placeholder="Descriere task" class="form-control" rows="6"></textarea>
+                </div>
+                <div class="input-group no-border input-lg text-center col-md-12 ml-auto mr-auto">
+                  <input id="term_etask" name="rvw_term_etask" type="text" class="form-control date-picker" placeholder="Termen limita" data-datepicker-color="primary" required autocomplete="off">
+                </div>
+                  <span>Progres</span>
+                  <br>
+                  <div id="slider_progres" class="slider"></div>
+                  <br>
+                  <div class="form-group">
+                    <label for="status_edit">Status</label>
+                    <select class="form-control" id="status_edit" name="rvw_status">
+                      <option>In derulare</option>
+                      <option>Terminat</option>
+                      <option>Anulat</option>
+                    </select>
+                  </div>
+                  <span>Participanti</span>
+                <div class="form-check">
+                  {% for i in range(nume_membri_list|length) %}
+                  <label class="form-check-label">
+                    <input id="{{ nume_membri_list[i] }}" name="{{ nume_membri_list[i] }}" class="form-check-input" type="checkbox">
+                    <span class="form-check-sign"></span>
+                    {{ nume_membri_list[i] }}
+                  </label>
+                    {% if i != nume_membri_list|length-1 %}
+                    <hr>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="submit_edit_task()">Salveaza</button>
+              <button id="anuleazae" type="button" class="btn btn-danger" data-dismiss="modal">Anuleaza</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      function submit_edit_task(){
+        var form = document.getElementById("taskedit");
+        var XHR = new XMLHttpRequest();
+        var FD = new FormData(form);
+        XHR.addEventListener("error", function(event) {
+          alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+        });
+        XHR.addEventListener("load", function(event) {
+          alert(event.target.responseText);
+          if(event.target.responseText.includes("salvate")){
+            $("#anuleazae").click();
+            document.getElementById("taskedit").reset();
+            get_taskuri(false);
+          }
+        });
+        XHR.open("POST", "rvw-api/membri/{{seccode}}/edit_task");
+        XHR.send(FD);
+      }
+
+      function sub_task(){
+        var form = document.getElementById("tasksub");
+        var XHR = new XMLHttpRequest();
+        var FD = new FormData(form);
+        XHR.addEventListener("error", function(event) {
+          alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+        });
+        XHR.addEventListener("load", function(event) {
+          alert(event.target.responseText);
+          if(event.target.responseText.includes("inregistrat")){
+            $("#anuleaza").click();
+            document.getElementById("tasksub").reset();
+            get_taskuri(false);
+          }
+        });
+        XHR.open("POST", "rvw-api/membri/{{seccode}}/submtask");
+        XHR.send(FD);
+      }
+      </script>
+      {%endif%}
+      <!-- Footer -->
+      <footer class="footer" data-background-color="black">
+        <div class=" container ">
+          <nav>
+            <ul>
+              <li>
+                <a href="http://www.ssorion.ro" target="_blank">
+                  Societatea Stiintifica Orion
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="copyright" id="copyright">
+            &copy;
+            <script>
+              document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+            </script>, River Wolves
+          </div>
+        </div>
+      </footer>
+      <!-- End Footer -->
+    </div>
+  
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/core/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/core/popper.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/core/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap-switch.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/now-ui-kit.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/plugins/nouislider.min.js') }}" type="text/javascript"></script>
+    <script>
+      {%if lvl >= 3%}
+      function isJson(item) {
+          item = typeof item !== "string"
+              ? JSON.stringify(item)
+              : item;
+          try {
+              item = JSON.parse(item);
+          } catch (e) {
+              return false;
+          }
+          if (typeof item === "object" && item !== null) {
+              return true;
+          }
+          return false;
+      }
+        $(document).ready(function(){
+          var slider_prog = document.getElementById('slider_progres');
+                noUiSlider.create(slider_prog, {
+                  start: 0,
+                  connect: [true,false],
+                  range: {
+                    min: 0,
+                    max: 100
+                  }
+                });
+                slider_prog.noUiSlider.on('update', function (values, handle) {
+                    document.getElementById('prog_etask').value = values[handle];
+                });
+        });
+        function et(uid){
+          $.ajax({
+              url: 'rvw-api/membri/{{seccode}}/'+uid+'/get_task',
+              type: 'post',
+              dataType: 'json',
+              contentType: 'application/json',
+              success: function (data) {
+                if(!isJson(data)){
+                  alert(data);
+                  return;
+                }
+                document.getElementById("taskedit").reset();
+                document.getElementById('uid_etask').value = uid;
+                document.getElementById('nume_etask').value = data.nume;
+                document.getElementById('desc_etask').value = data.desc;
+                document.getElementById('term_etask').value = data.termen.replace(", 00:00:00","");
+                var slider_prog = document.getElementById('slider_progres');
+                slider_prog.noUiSlider.set(data.progres)
+                var prt = data.participanti;
+                for(var n=0;n<prt.length;n++){
+                  document.getElementById(prt[n]).checked = true;
+                }
+                $("#editTask").modal('toggle');
+              }
+          });
+        }
+      {%endif%}
+      var lastre = [];
+      get_taskuri(true);
+      setInterval(get_taskuri, 10000);
+      function get_taskuri(check=true){
+        $.ajax({
+              url: 'rvw-api/membri/{{seccode}}/get_tasks',
+              type: 'post',
+              dataType: 'json',
+              contentType: 'application/json',
+              success: function (data) {
+                if(lastre.length == data.length && check){
+                  if(data.length == 0) return;
+                  var sch = false;
+                  for(var g=0;g<data.length;g++){
+                    var obj1 = lastre[g];
+                    var obj2 = JSON.parse(data[g]);
+                    for(key in obj1) { 
+                        if(obj1[key] === obj2[key]) {
+                            continue;
+                        } else if(Object.prototype.toString.call(obj1[key]) !== '[object Array]') {
+                            sch=true;
+                            break;
+                        }
+                    }
+                    if(sch) break;
+                  }
+                  if(!sch) return;
+                }
+                lastre = data;
+                var th = document.getElementById("task_holder");
+                if(data.length == 0){
+                  th.innerHTML = "<h3>Nu sunt taskuri valabile</h3>";
+                  return;
+                }
+                for(var i=0; i<data.length; i++){
+                  data[i] = JSON.parse(data[i]);
+                }
+                data.sort( function ( b, a ) {
+                    if(b.status == a.status)
+                      return b.data_initiere - a.data_initiere; 
+                    else{
+                      if(b.status > a.status)
+                        return 1;
+                      else
+                        return -1;
+                    }
+                  });
+                var fin = "";
+                for(var i=0; i<data.length; i++){
+                  var tsk = data[i];
+                  var desc = tsk.desc.split(" ");
+                  for(var k=0;k<desc.length;k++){
+                    if(desc[k].includes("http://") || desc[k].includes("https://")){
+                      desc[k] = '<a href="'+desc[k]+'" target="_blank">'+desc[k]+'</a>';
+                    }
+                  }
+
+                  var term = '';
+                  if(tsk.status==0)
+                    term = '<h6 class="card-subtitle mb-2 text-muted">Termen limita: '+tsk.termen.replace(", 00:00:00","")+'</h6>';
+                  else if(tsk.status==1)
+                    term = '<span class="badge badge-success">Terminat</span>';
+                  else
+                    term = '<span class="badge badge-danger">Anulat</span>'
+
+                  var but = ''
+                  if(tsk.status == 0 && !tsk.participanti.includes("{{uid}}"))
+                   but='<button class="btn btn-primary btn-round btn-lg btn-block" onClick=\'partikip("'+tsk.uid+'")\'>Participa</button>';
+
+                  var prog = ''
+                  if(tsk.status == 0){
+                    prog = '<div class="progress-container progress-primary">'+
+                              '<span class="progress-badge">Progres</span>'+
+                              '<div class="progress">'+
+                                '<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="'+tsk.progres+'" aria-valuemin="0" aria-valuemax="100" style="width: '+tsk.progres+'%;">'+
+                                  '<span class="progress-value">'+tsk.progres+'%</span>'+
+                                '</div>'+
+                              '</div>'+
+                            '</div>'
+                  }
+
+                  {%if lvl >= 3%}
+                  var templ = '<div class="card">'+
+                                '<div class="card-body">'+
+                                  '<h3 class="card-title">'+tsk.nume+'</h3>'+
+                                  term +
+                                  '<p class="card-text"><b>'+desc.join(" ")+'</b></p>'+
+                                  prog +
+                                  but +
+                                  '<button class="btn btn-default btn-round btn-lg btn-block" onClick=\'et("'+tsk.uid+'")\'>Editeaza</button>'+
+                                '</div>'+
+                              '</div>'.trim();
+                  {%else%}
+                  var templ = '<div class="card">'+
+                                '<div class="card-body">'+
+                                  '<h3 class="card-title">'+tsk.nume+'</h3>'+
+                                  term +
+                                  '<p class="card-text"><b>'+desc.join(" ")+'</b></p>'+
+                                  prog +
+                                  but +
+                                '</div>'+
+                              '</div>'.trim();
+                  {%endif%}
+                  fin += templ;
+                }
+                th.innerHTML = fin;
+                
+              }
+          });
+        }
+
+      function partikip(taskid){
+          var XHR = new XMLHttpRequest();
+          var FD = new FormData();
+          FD.append("rvw_task",taskid)
+          XHR.addEventListener("error", function(event) {
+            alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+          });
+          XHR.addEventListener("load", function(event) {
+            alert(event.target.responseText);
+            get_taskuri(false)
+          });
+          XHR.open("POST", "rvw-api/membri/{{seccode}}/partikip_task");
+          XHR.send(FD);
+        }
+
+      function sendData(form,to) {
+        var XHR = new XMLHttpRequest();
+        var FD = new FormData(form);
+        XHR.addEventListener("error", function(event) {
+          alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+        });
+        XHR.addEventListener("load", function(event) {
+          alert(event.target.responseText);
+          location.reload();
+        });
+        XHR.open("POST", to);
+        XHR.send(FD);
+      }
+
+      function addToForm(id,to){
+        var form = document.getElementById(id);
+        $("#"+id+" :input").change(function() {
+          $("#"+id).data("modificat",true);
+        });
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          if ($("#"+id).data("modificat")) {
+            sendData(form,to);
+            $("#"+id).data("modificat",false);
+          }else{
+            alert("Datele nu au fost modificate")
+          }
+        });
+      }
+
+      addToForm("subprofil","rvw-api/membri/{{seccode}}/subprof");
+      {% if interese %}
+      addToForm("interesep","rvw-api/membri/{{seccode}}/subinteres");
+      {% endif %}
+
+      function execPrezent(){
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(sp,se);
+        } else {
+          alert('Browserul nu suporta geolocatia')
+        }
+
+        function se(error){
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              alert("Locatia trebuie sa fie activata si confirmata pentru a putea inregistra prezenta")
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert("Locatia nu este valabila. Asigura-te ca o ai activata.")
+              break;
+            case error.TIMEOUT:
+              alert("Request-ul a expirat. Incearca din nou.")
+              break;
+            case error.UNKNOWN_ERROR:
+              alert("A aparut o eroare neasteptata. Incearca din nou.")
+              break;
+          }
+        }
+
+        function sp(pos){
+          var XHR = new XMLHttpRequest();
+          var FD = new FormData();
+          FD.append("rvw_lat",pos.coords.latitude)
+          FD.append("rvw_lon",pos.coords.longitude)
+          FD.append("rvw_acc",pos.coords.accuracy)
+          XHR.addEventListener("error", function(event) {
+            alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+          });
+          XHR.addEventListener("load", function(event) {
+            alert(event.target.responseText);
+          });
+          XHR.open("POST", "rvw-api/membri/{{seccode}}/prezent");
+          XHR.send(FD);
+        }
+      }
+    </script>
+    <script>
+      // var hmmm = 0;
+
+      // function get_general(){
+      //   var XHR = new XMLHttpRequest();
+      //   var FD = new FormData();
+      //   XHR.addEventListener("error", function(event) {
+      //     alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+      //   });
+      //   XHR.addEventListener("load", function(event) {
+      //     if(hmmm != event.target.responseText.length){
+      //       get_general_s();
+      //       document.getElementById("rvw_genfeed").innerHTML = event.target.responseText;
+      //       hmmm = event.target.responseText.length;
+      //     }
+      //   });
+      //   XHR.open("POST", "rvw-api/membri/{{seccode}}/get_t_gen");
+      //   XHR.send(FD);
+      // }
+
+      // function get_general_s(){
+      //   var XHR = new XMLHttpRequest();
+      //   var FD = new FormData();
+      //   XHR.addEventListener("error", function(event) {
+      //     alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+      //   });
+      //   XHR.addEventListener("load", function(event) {
+      //     $('#rvw_genfeed').append(event.target.responseText);
+      //   });
+      //   XHR.open("POST", "rvw-api/membri/{{seccode}}/get_t_gen_s");
+      //   XHR.send(FD);
+      // }
+      function get_general_s(){
+        var XHR = new XMLHttpRequest();
+        var FD = new FormData();
+        XHR.addEventListener("error", function(event) {
+          document.getElementById("rvw_genfeed").innerHTML = "A aparut o eroare la conexiunea cu serverul. Da refresh la pagina.";
+        });
+        XHR.addEventListener("load", function(event) {
+          document.getElementById("rvw_genfeed").innerHTML = "";
+          $('#rvw_genfeed').append(event.target.responseText);
+        });
+        XHR.open("POST", "https://ro049.com/rvw-api/event/execevent/{{seccode}}/get_general");
+        XHR.send(FD);
+      }
+
+      get_general_s();
+      setInterval(get_general_s, 10000);
+    </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js" integrity="sha512-G8JE1Xbr0egZE5gNGyUm1fF764iHVfRXshIoUWCTPAbKkkItp/6qal5YAHXrxEu4HNfPTQs6HOu3D5vCGS1j3w==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q==" crossorigin="anonymous"></script>
+  </body>
+</html>

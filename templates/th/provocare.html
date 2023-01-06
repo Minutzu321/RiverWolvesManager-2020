@@ -1,0 +1,44 @@
+<div id="my_camera"></div>
+<br>
+<div id="results" style="display: none;"></div>
+<br>
+
+<button type="button" class="btn btn-primary" onclick="deschideCamera();">Poza</button>
+<button type="button" class="btn btn-danger" onclick="deschideCamera();">Trimite</button>
+<script type="text/javascript">
+    var T = false;
+    function deschideCamera(){
+        var x = document.getElementById("results");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+
+        var y = document.getElementById("my_camera");
+        if (y.style.display === "none") {
+            y.style.display = "block";
+        } else {
+            y.style.display = "none";
+        }
+      if(!T){
+        Webcam.set({
+          width: 300,
+          height: 400,
+          image_format: 'jpeg',
+          jpeg_quality: 60
+        });
+        Webcam.set('constraints',{
+          facingMode: "environment"
+        });
+        Webcam.attach( '#my_camera' );
+        T = true;
+      }else{
+        Webcam.snap( function(data_uri) {
+          document.getElementById("poza").value = data_uri;
+          document.getElementById('results').innerHTML = 
+          '<img src="'+data_uri+'"/>';
+          } );
+      }
+    }
+  </script>

@@ -1,0 +1,20 @@
+<h3>{{indiciu}}</h3>
+{{poza|safe}}
+{{locatie|safe}}
+<hr>
+<input id="rvw_raspuns" type="text" class="form-control" placeholder="Raspuns" required autocomplete="off">
+<button id="btn" type="button" class="btn btn-primary" onclick="trimite_raspuns();">Trimite</button>
+<script>
+    var input = document.getElementById("rvw_raspuns");
+    input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("btn").click();
+    }
+    });
+
+    function trimite_raspuns(){
+        ws.send("%rasp%"+document.getElementById("rvw_raspuns").value)
+        document.getElementById("rvw_raspuns").value = "";
+    }
+</script>

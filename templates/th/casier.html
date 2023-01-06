@@ -1,0 +1,177 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="FTC, Romania, Robotics, Robotica, Concurs, Echipa, Tulcea, Grigore Moisil, First Tech Challange, Team, STEM, Volunteers, Voluntari, Societatea Stiintifica Orion, Liceu, River Wolves, Team">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='img/apple-icon.png')}}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png')}}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+      River Wolves
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/rvw.css')}}" rel="stylesheet" />
+
+  </head>
+  <body class="index-page sidebar-collapse">
+    <!-- Header -->
+    <div class="wrapper">
+      <div class="main">
+        <div class="section section-tabs">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-10 ml-auto col-xl-10 mr-auto aplica">
+                <div class="card">
+                  <div class="card-header">
+                    <p></p>
+                    <ul class="nav nav-pills nav-pills-just-icons nav-pills-primary justify-content-center" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#general" role="tab">
+                          <i class="now-ui-icons clothes_tie-bow"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- MODAL -->
+                  <div class="modal fade" id="partikip" tabindex="-1" role="dialog" aria-labelledby="partikipLabel" style="display: none;" aria-modal="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                          <h2 class="title title-up">ro049.com/th</h2>
+                        </div>
+                        <div class="modal-body" id="qrcode">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">Inchide</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- CARD -->
+                  <div class="card-body">
+                    <div class="tab-content text-center">
+                      <div class="tab-pane active" id="general" role="tabpanel">
+                        <form id="rvw_form">
+                          <div class="form-group">
+                            <label for="nume_input">Nume si prenume</label>
+                            <input type="text" class="form-control" id="nume_input" name="nume" placeholder="Nume" required>
+                          </div>
+                          <div class="form-group">
+                            <label for="tel_input">Numar de telefon</label>
+                            <input type="phone" class="form-control" id="tel_input" name="tel" placeholder="Telefon" required>
+                          </div>
+                          <div class="form-group">
+                            <label for="pers">Cate persoane?</label>
+                            <select class="form-control" id="pers" name="pers">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="plata">Cat au platit?</label>
+                            <input type="text" class="form-control" id="plata" name="plata" placeholder="Plata" required>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="relax">Relax?</label>
+                            <input type="checkbox" id="relax" name="relax">
+                            <br>
+                            <label for="pickup">Frappeuri PickUp?</label>
+                            <select class="form-control" id="pickup" name="pickup">
+                              <option value="0">0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="copii">Copii?</label>
+                            <input type="checkbox" id="copii" name="copii">
+                            <br>
+                            <label for="adolescenti">Adolescenti/Tineri?</label>
+                            <input type="checkbox" id="adolescenti" name="adolescenti">
+                            <br>
+                            <label for="adulti">Adulti</label>
+                            <input type="checkbox" id="adulti" name="adulti">
+                          </div>
+                          
+                          <div class="form-group">
+                            <label for="persoane_input">Dificultate</label>
+                            <select class="form-control" id="persoane_input" name="dificultate">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                            </select>
+                          </div>
+                        </form>
+                        <button type="button" class="btn btn-primary" onclick="sendffd();" data-toggle="modal" data-target="#partikip">Adauga</button>
+                        <script>
+                          function sendffd(){
+                            document.getElementById("qrcode").innerHTML = "";
+                            var form = document.getElementById("rvw_form")
+                            var XHR = new XMLHttpRequest();
+                            var FD = new FormData(form);
+                            XHR.addEventListener("error", function(event) {
+                              alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+                            });
+                            XHR.addEventListener("load", function(event) {
+                              new QRCode(document.getElementById("qrcode"), event.target.responseText);
+                            });
+                            XHR.open("POST", "https://ro049.com/th/casier");
+                            XHR.send(FD);
+                          }
+                          
+                        </script>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <!-- Footer -->
+      <footer class="footer" data-background-color="black">
+        <div class=" container ">
+          <nav>
+            <ul>
+              <li>
+                <p rel="tooltip" title="Chiar nimic" data-placement="bottom">Nu-i nimic aici</p>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </footer>
+      <!-- End Footer -->
+    </div>
+  
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/core/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/core/popper.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/core/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap-switch.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugins/nouislider.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/now-ui-kit.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/qrcode.min.js') }}" type="text/javascript"></script>
+  </body>
+</html>

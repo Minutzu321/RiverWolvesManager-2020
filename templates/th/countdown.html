@@ -1,0 +1,73 @@
+<h2>Treasure Hunt-ul va incepe in</h2>
+<h3 id="cdn"></h3>
+<script>
+    var data = new Date("May 22, 2021 17:30:00").getTime();
+    var x = setInterval(function() {
+      var acum = new Date().getTime();
+      var d = data - acum;
+      var ore = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minute = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
+      var secunde = Math.floor((d % (1000 * 60)) / 1000);
+      var ore_s = ore+" ore "
+      if(ore == 1)
+        ore_s = "o ora ";
+      if(ore == 0)
+        ore_s = ""
+
+      var min_s = minute+" minute "
+      if(minute == 1)
+        min_s = "un minut ";
+      if(minute == 0)
+        min_s = ""
+
+      var sec_s = secunde+" secunde"
+      if(secunde == 1)
+        sec_s = "o secunda";
+      document.getElementById("cdn").innerHTML = ore_s
+      + min_s + sec_s;
+      if (d < 0) {
+        document.getElementById("cdn").innerHTML = "Se generează traseele.."
+        clearInterval(x);
+        ws.send("get");
+      }
+    }, 1000);
+</script>
+<script>
+  getLocation();
+    var intervalId = setInterval(function() {
+        getLocation();
+    }, 6000);
+
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    function sendpos(position) {
+      ws.send("%coord%"+position.coords.latitude+","+position.coords.longitude+","+position.coords.accuracy)
+    }
+    function error(err) {
+      switch(error.code) {
+          case error.PERMISSION_DENIED:
+            alert("Locatia trebuie sa fie activata si confirmata pentru a putea inregistra prezenta")
+            break;
+          case error.POSITION_UNAVAILABLE:
+            alert("Locatia nu este valabila. Asigura-te ca o ai activata.")
+            break;
+          case error.TIMEOUT:
+            alert("Request-ul a expirat. Incearca din nou.")
+            break;
+          case error.UNKNOWN_ERROR:
+            alert("A aparut o eroare neasteptata. Incearca din nou.")
+            break;
+        }
+    }
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(sendpos, error, options);
+        } else {
+            alert("Browserul nu poate obtine locatia")
+        }
+    }
+</script>

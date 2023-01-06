@@ -1,0 +1,28 @@
+<div class="card">
+    <h3><b>Sedinte</b></h3>
+    {{content | safe}}
+</div>
+<script>
+    function partikip_la_sedinta(sedinta){
+        altagascainaltatraista(sedinta, "partikip_sedinta")
+    }
+
+    function mam_razgandit(sedinta){
+        altagascainaltatraista(sedinta, "nupartikip_sedinta")
+    }
+
+    function altagascainaltatraista(sedinta, event){
+      var XHR = new XMLHttpRequest();
+        var FD = new FormData();
+        FD.append("rvw_sedinta",sedinta)
+        XHR.addEventListener("error", function(event) {
+          alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+        });
+        XHR.addEventListener("load", function(event) {
+          alert(event.target.responseText);
+          get_general_s();
+        });
+        XHR.open("POST", "https://ro049.com/rvw-api/event/execevent/{{seccode}}/"+event);
+        XHR.send(FD);
+    }
+</script>

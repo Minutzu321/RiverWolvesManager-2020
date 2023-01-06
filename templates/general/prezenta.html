@@ -1,0 +1,50 @@
+<div class="card text-center">
+    <div class="card-body">
+    <h4 class="card-title">Inregistreaza prezenta la activitate</h4>
+    <p class="card-text">(Presupune activarea locatiei)</p>
+    <button class="btn btn-primary btn-round btn-lg btn-block col-md-4 ml-auto mr-auto" onclick="execPrezent()">Prezent</button>
+    </div>
+</div>
+<script>
+    function execPrezent(){
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(sp,se);
+        } else {
+          alert('Browserul nu suporta geolocatia')
+        }
+
+        function se(error){
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              alert("Locatia trebuie sa fie activata si confirmata pentru a putea inregistra prezenta")
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert("Locatia nu este valabila. Asigura-te ca o ai activata.")
+              break;
+            case error.TIMEOUT:
+              alert("Request-ul a expirat. Incearca din nou.")
+              break;
+            case error.UNKNOWN_ERROR:
+              alert("A aparut o eroare neasteptata. Incearca din nou.")
+              break;
+          }
+        }
+
+        function sp(pos){
+          var XHR = new XMLHttpRequest();
+          var FD = new FormData();
+          FD.append("rvw_lat",pos.coords.latitude)
+          FD.append("rvw_lon",pos.coords.longitude)
+          FD.append("rvw_acc",pos.coords.accuracy)
+          XHR.addEventListener("error", function(event) {
+            alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+          });
+          XHR.addEventListener("load", function(event) {
+            alert(event.target.responseText);
+            get_general_s();
+          });
+          XHR.open("POST", "https://ro049.com/rvw-api/event/execevent/{{seccode}}/prezent");
+          XHR.send(FD);
+        }
+    }
+</script>

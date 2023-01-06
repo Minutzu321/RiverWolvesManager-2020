@@ -1,0 +1,49 @@
+<h2>Termeni și condiții</h2>
+<h3>Organizatorii nu nu își asumă responsabilitatea pentru siguranța participanților sau a bunurilor pe traseu.</h3>
+<hr/>
+<h5>Semnătura</h5>
+<canvas id="rvw_semneaza" style="width: 100%; height: 400px;"></canvas>
+<button class="btn btn-primary" onclick="trimite()">Trimite</button>
+<button class="btn btn-danger" onclick="sterge()">Sterge</button>
+<script>
+var canvas = document.getElementById("rvw_semneaza");
+var signaturePad = new SignaturePad(canvas);
+signaturePad.minWidth = 2;
+signaturePad.backgroundColor = "rgba(30, 30, 30, 0.2)"
+signaturePad.maxWidth = 2;
+signaturePad.penColor = "rgb(0, 0, 0)";
+
+function resizeCanvas() {
+    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
+    signaturePad.clear();
+}
+
+function sterge(){
+    signaturePad.clear();
+}
+
+function trimite(){
+    if(signaturePad.isEmpty()){
+        alert("Te rugam sa semnezi termenii si conditiile")
+        return
+    }
+    var form = document.getElementById("rvw_form")
+    var XHR = new XMLHttpRequest();
+    var FD = new FormData();
+    FD.append("rvw_semnatura",canvas.toDataURL())
+    XHR.addEventListener("error", function(event) {
+        alert('Se pare ca a aparut o eroare la conexiunea cu serverul. Incearca din nou mai tarziu.');
+    });
+    XHR.addEventListener("load", function(event) {
+        alert(event.target.responseText);
+        ws.send("get");
+    });
+    XHR.open("POST", "https://ro049.com/th/conditii");
+    XHR.send(FD);
+}
+// window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+</script>

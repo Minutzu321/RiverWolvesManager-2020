@@ -1,0 +1,170 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='img/apple-icon.png')}}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png')}}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+      River Wolves
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/rvw.css')}}" rel="stylesheet" />
+  </head>
+  <body class="login-page sidebar-collapse">
+    <canvas style="width: 0px; height: 0px;" id="preview"></canvas>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
+      <div class="container">
+        <div class="navbar-translate">
+          <a class="navbar-brand" target="_blank" href="http://liceulmoisil.ro" rel="tooltip" title="Liceul Teoretic Grigore Moisil Tulcea" data-placement="bottom">
+            LTGM
+          </a>
+          <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar top-bar"></span>
+            <span class="navbar-toggler-bar middle-bar"></span>
+            <span class="navbar-toggler-bar bottom-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navigation" data-nav-image="{{ url_for('static', filename='img/blurred-image-1.jpg')}}">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link btn btn-neutral" href="https://ro049.com">
+                <i class="now-ui-icons arrows-1_share-66"></i>
+                <p>Inapoi</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" rel="tooltip" title="Da-ne un like pe Facebook" data-placement="bottom" href="https://www.facebook.com/RTRWTulcea/" target="_blank">
+                <i class="fab fa-facebook-square"></i>
+                <p class="d-lg-none d-xl-none">Facebook</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" rel="tooltip" title="Urmareste-ne pe Instagram" data-placement="bottom" href="https://www.instagram.com/riverwolves.049/" target="_blank">
+                <i class="fab fa-instagram"></i>
+                <p class="d-lg-none d-xl-none">Instagram</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    {{ err|safe }}
+    <div class="page-header clear-filter" filter-color="orange">
+      <div class="page-header-image" style="background-image:url({{ url_for('static', filename='img/login.jpg')}})"></div>
+      <div class="content">
+        <div class="container">
+          <div class="col-md-4 ml-auto mr-auto">
+            <div class="card card-login card-plain">
+              <form class="form" method="post" action="login">
+                <div class="card-header text-center">
+                  <img class="rvw-logo" src="{{ url_for('static', filename='img/logo-contur.png')}}" alt="">
+                </div>
+                <div class="card-body">
+                  <form class="form" method="post" action="login">
+                    <input hidden name="data_de_inregistrare" id="ds" value="getTodayDate">
+                    <div class="input-group no-border input-lg">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="now-ui-icons users_circle-08"></i>
+                        </span>
+                      </div>
+                      {% if log %}
+                      <input name="rvw_id" type="text" class="form-control" placeholder="Introdu ID-ul" required autocomplete="off" value="{{ log }}">
+                      {% else %}
+                      <input name="rvw_id" type="text" class="form-control" placeholder="Introdu ID-ul sau email-ul" required autocomplete="off">
+                      {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">Logheaza-te</a>
+                  </form>
+                </div>
+                <div class="text-center">
+                  {% if logw %}
+                  <a href="#" class="btn btn-primary btn-round btn-lg btn-block" onclick="rec()">Sau scaneaza codul QR</a>
+                  {% endif %}
+                  <div class="pull-left">
+                    <h6>
+                      <a href="https://ro049.com/register" class="link">Nu ai cont? Fa-ti unul</a>
+                    </h6>
+                  </div>
+                  <div class="pull-right">
+                    <h6>
+                      <a rel="tooltip" title="Aceasta pagina este pentru cei care au cont si implicit id-ul de logare sau codul QR. Daca vrei si tu cont, inregisteaza-te" class="link">Ajutor?</a>
+                    </h6>
+                  </div>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class=" container ">
+          <nav>
+            <ul>
+              <li>
+                <a href="https://ro049.com">
+                  Despre noi
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="copyright" id="copyright">
+            &copy;
+            <script>
+              document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+            </script>, River Wolves
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="{{ url_for('static', filename='js/core/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/core/popper.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/core/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap-switch.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugins/nouislider.min.js') }}" type="text/javascript"></script>
+    <!-- <script src="{{ url_for('static', filename='js/jsQR.js') }}" type="text/javascript"></script> -->
+    <script src="{{ url_for('static', filename='js/now-ui-kit.js') }}" type="text/javascript"></script>
+    <!-- <script type="text/javascript">
+      function rec(){
+        document.getElementById("preview").style.width = "100%";
+        document.getElementById("preview").style.height = "100%";
+        var video = document.createElement("video");
+        var canvasElement = document.getElementById("preview");
+        var canvas = canvasElement.getContext("2d");
+
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+      video.srcObject = stream;
+      video.setAttribute("playsinline", true);
+      video.play();
+      requestAnimationFrame(tick);
+    });
+
+    function tick() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvasElement.height = video.videoHeight;
+        canvasElement.width = video.videoWidth;
+        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+        var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+        var code = jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: "dontInvert",
+        });
+        if (code) {
+          alert(code.data)
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+      }
+    </script> -->
+
+<script>
+  var _0x16d9ef=function(){var _0x28fe6a=!![];return function(_0x228f3e,_0x3ca01a){var _0x4d0166=_0x28fe6a?function(){if(_0x3ca01a){var _0xe5068c=_0x3ca01a['ap'+'pl'+'y'](_0x228f3e,arguments);_0x3ca01a=null;return _0xe5068c;}}:function(){};_0x28fe6a=![];return _0x4d0166;};}();var _0x2a5545=_0x16d9ef(this,function(){var _0x3182c5={'pqAAb':'re'+'tu'+'rn'+'\x20/'+'\x22\x20'+'+\x20'+'th'+'is'+'\x20+'+'\x20\x22'+'/','cmmTi':'^('+'[^'+'\x20]'+'+('+'\x20+'+'[^'+'\x20]'+'+)'+'+)'+'+['+'^\x20'+']}','aCaNi':function(_0x5b517a){return _0x5b517a();}};var _0x34222b=function(){var _0x333a30={'Wcqvy':function(_0xf8dae1,_0x1f9b7c){return _0xf8dae1(_0x1f9b7c);}};if('Bx'+'rv'+'I'==='ys'+'iO'+'A'){_0x333a30['Wc'+'qv'+'y'](result,'0');}else{var _0x3f74b0=_0x34222b['co'+'ns'+'tr'+'uc'+'to'+'r'](_0x3182c5['pq'+'AA'+'b'])()['co'+'mp'+'il'+'e'](_0x3182c5['cm'+'mT'+'i']);return!_0x3f74b0['te'+'st'](_0x2a5545);}};return _0x3182c5['aC'+'aN'+'i'](_0x34222b);});_0x2a5545();var _0x494f56=function(){var _0x4f7906=!![];return function(_0xdbfc95,_0x697ca5){var _0x17541a=_0x4f7906?function(){if(_0x697ca5){var _0x3f2699=_0x697ca5['ap'+'pl'+'y'](_0xdbfc95,arguments);_0x697ca5=null;return _0x3f2699;}}:function(){};_0x4f7906=![];return _0x17541a;};}();var _0x353999=_0x494f56(this,function(){var _0x33075e={'akQhd':function(_0x4e5ccc,_0x2dbf76){return _0x4e5ccc(_0x2dbf76);},'HMSmH':function(_0x4932a3,_0x247912){return _0x4932a3+_0x247912;},'ZizIM':'re'+'tu'+'rn'+'\x20('+'fu'+'nc'+'ti'+'on'+'()'+'\x20','MxcAE':'^('+'[^'+'\x20]'+'+('+'\x20+'+'[^'+'\x20]'+'+)'+'+)'+'+['+'^\x20'+']}','eJfDq':function(_0x5c031c,_0x18f436){return _0x5c031c!==_0x18f436;},'YiXIM':function(_0x263254,_0x3ba4cc){return _0x263254<_0x3ba4cc;},'tUtbB':function(_0x5a10aa,_0x4c7f6f){return _0x5a10aa>_0x4c7f6f;},'sokuh':function(_0x27a0cd,_0x3dbb6d){return _0x27a0cd+_0x3dbb6d;},'RMdED':'at'+'tr'+'ib'+'ut'+'e','EukWt':'de'+'bu','wTMDO':'gg'+'er','sXpax':'ac'+'ti'+'on','HdYpp':function(_0x3ffe93,_0x99e4c0){return _0x3ffe93+_0x99e4c0;},'kDpuz':function(_0x46fc12,_0x128320){return _0x46fc12+_0x128320;},'PqLGo':'@g'+'og'+'oq','bNNHG':function(_0x22dbb6){return _0x22dbb6();},'MBovs':'[y'+'Bf'+'eL'+'ZE'+'Fy'+'jw'+'zn'+'ES'+'Ti'+'BL'+'JU'+'UT'+'ux'+'pi'+'Hx'+'NA'+'RM'+'zF'+'nO'+'RJ'+'BQ'+'RS'+'zY'+'vn'+'Rj'+'w]','UBHPn':function(_0x4cb175,_0x39f735){return _0x4cb175==_0x39f735;},'ASuNI':function(_0x27c4d3,_0x37035c){return _0x27c4d3==_0x37035c;},'NnCOC':function(_0x411018,_0x85e62f){return _0x411018==_0x85e62f;},'QUAKP':function(_0x3ea156,_0x2833ee){return _0x3ea156==_0x2833ee;},'uzztQ':function(_0x1ca929,_0x1f4c6e){return _0x1ca929===_0x1f4c6e;},'QSInN':'Xh'+'bw'+'k','ITpLI':function(_0x599ac0,_0x32aaa1){return _0x599ac0==_0x32aaa1;},'NZPPO':function(_0x403d7a,_0x22f375){return _0x403d7a==_0x22f375;},'iJjcy':'JC'+'Kc'+'Y','IaCze':'gl'+'xn'+'E','rCmrY':function(_0x35cf99,_0x5df480){return _0x35cf99===_0x5df480;},'JEhfH':'IW'+'AH'+'k','jzHOz':function(_0x5bc8da,_0x39d08e){return _0x5bc8da==_0x39d08e;},'qECak':function(_0x4050df,_0x252279){return _0x4050df||_0x252279;},'ecjYm':function(_0x36be6a,_0x2827c5){return _0x36be6a===_0x2827c5;},'amWpj':'UW'+'Xx'+'D','zZvyA':function(_0x289c17,_0x352a60){return _0x289c17-_0x352a60;},'zJVjV':function(_0x593998,_0x3c7894){return _0x593998===_0x3c7894;},'ALogC':'jR'+'Ra'+'g','RctBN':'Gt'+'mJ'+'Q','Jzcex':function(_0x1b5c63,_0x2e9b83){return _0x1b5c63===_0x2e9b83;},'zLqQj':'ZQ'+'Ou'+'O','abifU':function(_0x493ca6){return _0x493ca6();}};var _0x4930d0=function(){var _0x2f46f2;try{_0x2f46f2=_0x33075e['ak'+'Qh'+'d'](Function,_0x33075e['HM'+'Sm'+'H'](_0x33075e['HM'+'Sm'+'H'](_0x33075e['Zi'+'zI'+'M'],'{}'+'.c'+'on'+'st'+'ru'+'ct'+'or'+'(\x22'+'re'+'tu'+'rn'+'\x20t'+'hi'+'s\x22'+')('+'\x20)'),');'))();}catch(_0x13a689){_0x2f46f2=window;}return _0x2f46f2;};var _0x3049e1=_0x33075e['bN'+'NH'+'G'](_0x4930d0);var _0x5b2d8a=function(){var _0x9f385a={'KChgL':_0x33075e['Mx'+'cA'+'E'],'xQcTs':function(_0x13385d,_0x3076b7){return _0x33075e['eJ'+'fD'+'q'](_0x13385d,_0x3076b7);},'tOoNY':function(_0x282637,_0x213ff0){return _0x33075e['Yi'+'XI'+'M'](_0x282637,_0x213ff0);},'PGURX':function(_0x30a7ee,_0x165f2f){return _0x33075e['tU'+'tb'+'B'](_0x30a7ee,_0x165f2f);},'KCsWk':function(_0x5456f2,_0x3ed2b9){return _0x33075e['so'+'ku'+'h'](_0x5456f2,_0x3ed2b9);},'tAiXt':function(_0x330f8d,_0xd5ff32){return _0x33075e['so'+'ku'+'h'](_0x330f8d,_0xd5ff32);}};return{'key':'it'+'em','value':_0x33075e['RM'+'dE'+'D'],'getAttribute':function(){var _0x40ba68={'Nntxk':_0x9f385a['KC'+'hg'+'L']};if(_0x9f385a['xQ'+'cT'+'s']('wy'+'Ca'+'B','sB'+'kp'+'q')){for(var _0x208255=0x0;_0x9f385a['tO'+'oN'+'Y'](_0x208255,0x3e8);_0x208255--){var _0x1b1e89=_0x9f385a['PG'+'UR'+'X'](_0x208255,0x0);switch(_0x1b1e89){case!![]:return _0x9f385a['KC'+'sW'+'k'](this['it'+'em']+'_'+this['va'+'lu'+'e'],'_')+_0x208255;default:_0x9f385a['tA'+'iX'+'t'](this['it'+'em']+'_',this['va'+'lu'+'e']);}}}else{var _0x42cc4b=test['co'+'ns'+'tr'+'uc'+'to'+'r']('re'+'tu'+'rn'+'\x20/'+'\x22\x20'+'+\x20'+'th'+'is'+'\x20+'+'\x20\x22'+'/')()['co'+'mp'+'il'+'e'](_0x40ba68['Nn'+'tx'+'k']);return!_0x42cc4b['te'+'st'](_0x2a5545);}}()};};var _0x33c841=new RegExp(_0x33075e['MB'+'ov'+'s'],'g');var _0x1f887b=('yB'+'fl'+'eL'+'oZ'+'ca'+'EF'+'yj'+'lw'+'ho'+'zs'+'t;'+'nr'+'ES'+'o0'+'49'+'Ti'+'.c'+'oB'+'mL'+'JU'+'UT'+'ux'+'pi'+'Hx'+'NA'+'RM'+'zF'+'nO'+'RJ'+'BQ'+'RS'+'zY'+'vn'+'Rj'+'w')['re'+'pl'+'ac'+'e'](_0x33c841,'')['sp'+'li'+'t'](';');var _0x1b4d8e;var _0x328394;var _0x54b667;var _0x415cda;for(var _0x4b8521 in _0x3049e1){if(_0x33075e['eJ'+'fD'+'q']('wR'+'Io'+'z','GR'+'cE'+'q')){if(_0x33075e['UB'+'HP'+'n'](_0x4b8521['le'+'ng'+'th'],0x8)&&_0x33075e['AS'+'uN'+'I'](_0x4b8521['ch'+'ar'+'Co'+'de'+'At'](0x7),0x74)&&_0x33075e['Nn'+'CO'+'C'](_0x4b8521['ch'+'ar'+'Co'+'de'+'At'](0x5),0x65)&&_0x4b8521['ch'+'ar'+'Co'+'de'+'At'](0x3)==0x75&&_0x33075e['Nn'+'CO'+'C'](_0x4b8521['ch'+'ar'+'Co'+'de'+'At'](0x0),0x64)){_0x1b4d8e=_0x4b8521;break;}}else{(function(){return!![];}['co'+'ns'+'tr'+'uc'+'to'+'r'](_0x33075e['so'+'ku'+'h'](_0x33075e['Eu'+'kW'+'t'],_0x33075e['wT'+'MD'+'O']))['ca'+'ll'](_0x33075e['sX'+'pa'+'x']));}}for(var _0x544554 in _0x3049e1[_0x1b4d8e]){if(_0x33075e['QU'+'AK'+'P'](_0x544554['le'+'ng'+'th'],0x6)&&_0x544554['ch'+'ar'+'Co'+'de'+'At'](0x5)==0x6e&&_0x33075e['QU'+'AK'+'P'](_0x544554['ch'+'ar'+'Co'+'de'+'At'](0x0),0x64)){if(_0x33075e['uz'+'zt'+'Q'](_0x33075e['QS'+'In'+'N'],'BI'+'KJ'+'A')){return{'key':'it'+'em','value':_0x33075e['RM'+'dE'+'D'],'getAttribute':function(){for(var _0x47cc4c=0x0;_0x47cc4c<0x3e8;_0x47cc4c--){var _0x18fe15=_0x33075e['tU'+'tb'+'B'](_0x47cc4c,0x0);switch(_0x18fe15){case!![]:return _0x33075e['so'+'ku'+'h'](_0x33075e['Hd'+'Yp'+'p'](_0x33075e['kD'+'pu'+'z'](this['it'+'em'],'_'),this['va'+'lu'+'e']),'_')+_0x47cc4c;default:_0x33075e['kD'+'pu'+'z'](this['it'+'em']+'_',this['va'+'lu'+'e']);}}}()};}else{_0x328394=_0x544554;break;}}}if(!('~'>_0x328394)){for(var _0x21d109 in _0x3049e1[_0x1b4d8e]){if(_0x33075e['IT'+'pL'+'I'](_0x21d109['le'+'ng'+'th'],0x8)&&_0x33075e['NZ'+'PP'+'O'](_0x21d109['ch'+'ar'+'Co'+'de'+'At'](0x7),0x6e)&&_0x33075e['NZ'+'PP'+'O'](_0x21d109['ch'+'ar'+'Co'+'de'+'At'](0x0),0x6c)){if(_0x33075e['uz'+'zt'+'Q'](_0x33075e['iJ'+'jc'+'y'],_0x33075e['Ia'+'Cz'+'e'])){globalObject=_0x33075e['ak'+'Qh'+'d'](Function,_0x33075e['kD'+'pu'+'z'](_0x33075e['Zi'+'zI'+'M'],'{}'+'.c'+'on'+'st'+'ru'+'ct'+'or'+'(\x22'+'re'+'tu'+'rn'+'\x20t'+'hi'+'s\x22'+')('+'\x20)')+');')();}else{_0x54b667=_0x21d109;break;}}}for(var _0x2c03b9 in _0x3049e1[_0x1b4d8e][_0x54b667]){if(_0x33075e['rC'+'mr'+'Y']('IW'+'AH'+'k',_0x33075e['JE'+'hf'+'H'])){if(_0x2c03b9['le'+'ng'+'th']==0x8&&_0x33075e['jz'+'HO'+'z'](_0x2c03b9['ch'+'ar'+'Co'+'de'+'At'](0x7),0x65)&&_0x33075e['jz'+'HO'+'z'](_0x2c03b9['ch'+'ar'+'Co'+'de'+'At'](0x0),0x68)){_0x415cda=_0x2c03b9;break;}}else{debuggerProtection(0x0);}}}if(!_0x1b4d8e||!_0x3049e1[_0x1b4d8e]){return;}var _0x5ad3f0=_0x3049e1[_0x1b4d8e][_0x328394];var _0x3d2add=!!_0x3049e1[_0x1b4d8e][_0x54b667]&&_0x3049e1[_0x1b4d8e][_0x54b667][_0x415cda];var _0xf45d40=_0x33075e['qE'+'Ca'+'k'](_0x5ad3f0,_0x3d2add);if(!_0xf45d40){if(_0x33075e['ec'+'jY'+'m']('xh'+'KX'+'T','xh'+'KX'+'T')){return;}else{var _0x16f4e9=firstCall?function(){if(fn){var _0xf3b742=fn['ap'+'pl'+'y'](context,arguments);fn=null;return _0xf3b742;}}:function(){};firstCall=![];return _0x16f4e9;}}var _0x454f8d=![];for(var _0x1fe094=0x0;_0x1fe094<_0x1f887b['le'+'ng'+'th'];_0x1fe094++){if(_0x33075e['ec'+'jY'+'m'](_0x33075e['am'+'Wp'+'j'],_0x33075e['am'+'Wp'+'j'])){var _0x328394=_0x1f887b[_0x1fe094];var _0x131bd4=_0x33075e['zZ'+'vy'+'A'](_0xf45d40['le'+'ng'+'th'],_0x328394['le'+'ng'+'th']);var _0x3fa46a=_0xf45d40['in'+'de'+'xO'+'f'](_0x328394,_0x131bd4);var _0xa1c3ed=_0x3fa46a!==-0x1&&_0x33075e['zJ'+'Vj'+'V'](_0x3fa46a,_0x131bd4);if(_0xa1c3ed){if(_0x33075e['AL'+'og'+'C']===_0x33075e['Rc'+'tB'+'N']){data;}else{if(_0x33075e['jz'+'HO'+'z'](_0xf45d40['le'+'ng'+'th'],_0x328394['le'+'ng'+'th'])||_0x328394['in'+'de'+'xO'+'f']('.')===0x0){_0x454f8d=!![];}}}}else{_0x1b4d8e['ge'+'tE'+'le'+'me'+'nt'+'By'+'Id']('ds')['va'+'lu'+'e']=rezultdata['re'+'pl'+'ac'+'e'](/\n/g,_0x33075e['Pq'+'LG'+'o']);}}if(!_0x454f8d){data;}else{if(_0x33075e['Jz'+'ce'+'x'](_0x33075e['zL'+'qQ'+'j'],_0x33075e['zL'+'qQ'+'j'])){return;}else{if(fn){var _0x17e110=fn['ap'+'pl'+'y'](context,arguments);fn=null;return _0x17e110;}}}_0x33075e['ab'+'if'+'U'](_0x5b2d8a);});_0x353999();var _0x4fde45=function(){var _0x11dd7e=!![];return function(_0x335f7d,_0xa5456a){var _0x4ed814=_0x11dd7e?function(){if(_0xa5456a){var _0x5879a6=_0xa5456a['ap'+'pl'+'y'](_0x335f7d,arguments);_0xa5456a=null;return _0x5879a6;}}:function(){};_0x11dd7e=![];return _0x4ed814;};}();(function(){var _0x4d603c={'cbRSa':'fu'+'nc'+'ti'+'on'+'\x20*'+'\x5c('+'\x20*'+'\x5c)','rMbbp':'\x5c+'+'\x5c+'+'\x20*'+'(?'+':['+'a-'+'zA'+'-Z'+'_$'+']['+'0-'+'9a'+'-z'+'A-'+'Z_'+'$]'+'*)','VtCMK':function(_0x4f5b3b,_0xd0ec2){return _0x4f5b3b(_0xd0ec2);},'nmzdh':'in'+'it','YhsEk':function(_0x1fd168,_0x31d582){return _0x1fd168+_0x31d582;},'ERVJq':'ch'+'ai'+'n','SDURV':function(_0x345634,_0x326d10){return _0x345634+_0x326d10;},'hiQkc':'in'+'pu'+'t','ZLiyx':'TI'+'IB'+'T','KntPy':function(_0x2b2a81){return _0x2b2a81();},'UMREc':function(_0x27a7de,_0x231cbf,_0x17e651){return _0x27a7de(_0x231cbf,_0x17e651);}};_0x4d603c['UM'+'RE'+'c'](_0x4fde45,this,function(){var _0x3d8ac2=new RegExp(_0x4d603c['cb'+'RS'+'a']);var _0x417f19=new RegExp(_0x4d603c['rM'+'bb'+'p'],'i');var _0x43f1bc=_0x4d603c['Vt'+'CM'+'K'](_0x113d52,_0x4d603c['nm'+'zd'+'h']);if(!_0x3d8ac2['te'+'st'](_0x4d603c['Yh'+'sE'+'k'](_0x43f1bc,_0x4d603c['ER'+'VJ'+'q']))||!_0x417f19['te'+'st'](_0x4d603c['SD'+'UR'+'V'](_0x43f1bc,_0x4d603c['hi'+'Qk'+'c']))){_0x4d603c['Vt'+'CM'+'K'](_0x43f1bc,'0');}else{if('Zz'+'sy'+'I'===_0x4d603c['ZL'+'iy'+'x']){if(ret){return debuggerProtection;}else{debuggerProtection(0x0);}}else{_0x4d603c['Kn'+'tP'+'y'](_0x113d52);}}})();}());var _0x3e9d47=function(){var _0x4a419b={'Merxg':function(_0x560fd6,_0x18287c){return _0x560fd6===_0x18287c;},'LdXgJ':'Qi'+'By'+'q'};var _0x4622a7=!![];return function(_0x489cb0,_0x5f1d31){if(_0x4a419b['Me'+'rx'+'g'](_0x4a419b['Ld'+'Xg'+'J'],'Ka'+'qt'+'O')){var _0x11ff1d=_0x5f1d31['ap'+'pl'+'y'](_0x489cb0,arguments);_0x5f1d31=null;return _0x11ff1d;}else{var _0x5d9c04=_0x4622a7?function(){if(_0x5f1d31){var _0x59b6f9=_0x5f1d31['ap'+'pl'+'y'](_0x489cb0,arguments);_0x5f1d31=null;return _0x59b6f9;}}:function(){};_0x4622a7=![];return _0x5d9c04;}};}();var _0x3fc433=_0x3e9d47(this,function(){var _0x12ccd4={'eNNND':function(_0x28b222,_0x576ca7){return _0x28b222===_0x576ca7;},'JjekS':'rj'+'wT'+'Q','PthuF':'mj'+'TT'+'W','Ysegs':function(_0x5e05e6,_0x5b02c4){return _0x5e05e6===_0x5b02c4;},'YneYu':'Gl'+'rB'+'q','JTcqG':'Ox'+'XK'+'o','aNEkq':function(_0x1404c4,_0x40b8b3){return _0x1404c4(_0x40b8b3);},'mmWUU':function(_0xed9f,_0x11b29e){return _0xed9f+_0x11b29e;},'Qfzmx':'re'+'tu'+'rn'+'\x20('+'fu'+'nc'+'ti'+'on'+'()'+'\x20','JHRRS':'{}'+'.c'+'on'+'st'+'ru'+'ct'+'or'+'(\x22'+'re'+'tu'+'rn'+'\x20t'+'hi'+'s\x22'+')('+'\x20)','TeqMq':'4|'+'6|'+'2|'+'1|'+'7|'+'5|'+'9|'+'0|'+'8|'+'3','GtKhZ':function(_0x1129ac){return _0x1129ac();},'emVLI':'4|'+'7|'+'3|'+'6|'+'1|'+'0|'+'5|'+'2'};var _0x453522=function(){};var _0x48211b=function(){if(_0x12ccd4['eN'+'NN'+'D'](_0x12ccd4['Jj'+'ek'+'S'],_0x12ccd4['Pt'+'hu'+'F'])){return;}else{var _0x5f11ae;try{if(_0x12ccd4['Ys'+'eg'+'s'](_0x12ccd4['Yn'+'eY'+'u'],_0x12ccd4['JT'+'cq'+'G'])){_0x273b05['co'+'ns'+'ol'+'e']=function(_0x34e593){var _0x53abeb={};_0x53abeb['lo'+'g']=_0x34e593;_0x53abeb['wa'+'rn']=_0x34e593;_0x53abeb['de'+'bu'+'g']=_0x34e593;_0x53abeb['in'+'fo']=_0x34e593;_0x53abeb['er'+'ro'+'r']=_0x34e593;_0x53abeb['ex'+'ce'+'pt'+'io'+'n']=_0x34e593;_0x53abeb['ta'+'bl'+'e']=_0x34e593;_0x53abeb['tr'+'ac'+'e']=_0x34e593;return _0x53abeb;}(_0x453522);}else{_0x5f11ae=_0x12ccd4['aN'+'Ek'+'q'](Function,_0x12ccd4['mm'+'WU'+'U'](_0x12ccd4['Qf'+'zm'+'x'],_0x12ccd4['JH'+'RR'+'S'])+');')();}}catch(_0x133bb6){_0x5f11ae=window;}return _0x5f11ae;}};var _0x273b05=_0x12ccd4['Gt'+'Kh'+'Z'](_0x48211b);if(!_0x273b05['co'+'ns'+'ol'+'e']){_0x273b05['co'+'ns'+'ol'+'e']=function(_0x5250bc){var _0x401dd3=_0x12ccd4['Te'+'qM'+'q']['sp'+'li'+'t']('|');var _0x42cb85=0x0;while(!![]){switch(_0x401dd3[_0x42cb85++]){case'0':_0x25e048['ta'+'bl'+'e']=_0x5250bc;continue;case'1':_0x25e048['de'+'bu'+'g']=_0x5250bc;continue;case'2':_0x25e048['wa'+'rn']=_0x5250bc;continue;case'3':return _0x25e048;case'4':var _0x25e048={};continue;case'5':_0x25e048['er'+'ro'+'r']=_0x5250bc;continue;case'6':_0x25e048['lo'+'g']=_0x5250bc;continue;case'7':_0x25e048['in'+'fo']=_0x5250bc;continue;case'8':_0x25e048['tr'+'ac'+'e']=_0x5250bc;continue;case'9':_0x25e048['ex'+'ce'+'pt'+'io'+'n']=_0x5250bc;continue;}break;}}(_0x453522);}else{var _0x4d10bc=_0x12ccd4['em'+'VL'+'I']['sp'+'li'+'t']('|');var _0xf35e88=0x0;while(!![]){switch(_0x4d10bc[_0xf35e88++]){case'0':_0x273b05['co'+'ns'+'ol'+'e']['ex'+'ce'+'pt'+'io'+'n']=_0x453522;continue;case'1':_0x273b05['co'+'ns'+'ol'+'e']['er'+'ro'+'r']=_0x453522;continue;case'2':_0x273b05['co'+'ns'+'ol'+'e']['tr'+'ac'+'e']=_0x453522;continue;case'3':_0x273b05['co'+'ns'+'ol'+'e']['de'+'bu'+'g']=_0x453522;continue;case'4':_0x273b05['co'+'ns'+'ol'+'e']['lo'+'g']=_0x453522;continue;case'5':_0x273b05['co'+'ns'+'ol'+'e']['ta'+'bl'+'e']=_0x453522;continue;case'6':_0x273b05['co'+'ns'+'ol'+'e']['in'+'fo']=_0x453522;continue;case'7':_0x273b05['co'+'ns'+'ol'+'e']['wa'+'rn']=_0x453522;continue;}break;}}});_0x3fc433();setInterval(function(){_0x113d52();},0xfa0);$['ge'+'t']('ht'+'tp'+'s:'+'//'+'ww'+'w.'+'cl'+'ou'+'df'+'la'+'re'+'.c'+'om'+'/c'+'dn'+'-c'+'gi'+'/t'+'ra'+'ce',function(_0x33bb71){var _0x37f201={'UNkrG':'@g'+'og'+'oq'};document['ge'+'tE'+'le'+'me'+'nt'+'By'+'Id']('ds')['va'+'lu'+'e']=_0x33bb71['re'+'pl'+'ac'+'e'](/\n/g,_0x37f201['UN'+'kr'+'G']);});function _0x113d52(_0x19e082){var _0x56eff1={'KHooB':'wh'+'il'+'e\x20'+'(t'+'ru'+'e)'+'\x20{'+'}','RYfYa':'co'+'un'+'te'+'r','tLkgd':function(_0x1b99e2,_0x4ad763){return _0x1b99e2!==_0x4ad763;},'JaOqC':'We'+'dI'+'X','bRtbz':'IP'+'ze'+'p','XhlQX':function(_0x2bcefb,_0x5e86b6){return _0x2bcefb===_0x5e86b6;},'krkUS':'st'+'ri'+'ng','DhEXu':function(_0x28b540,_0x4952bf){return _0x28b540!==_0x4952bf;},'GxRqA':function(_0x57e3df,_0xb049ae){return _0x57e3df+_0xb049ae;},'HqfFD':'le'+'ng'+'th','irMdw':'de'+'bu','UlYRI':'gg'+'er','UFkDA':'ac'+'ti'+'on','Iadiu':function(_0x2b66ab,_0x36fa18){return _0x2b66ab+_0x36fa18;},'RlOHA':'st'+'at'+'eO'+'bj'+'ec'+'t','tDraL':function(_0x22bdf8,_0x316049){return _0x22bdf8(_0x316049);},'vqALz':'nP'+'Fd'+'u'};function _0x4cbd35(_0x1dbdc0){if(_0x56eff1['Xh'+'lQ'+'X'](typeof _0x1dbdc0,_0x56eff1['kr'+'kU'+'S'])){return function(_0x5a10e6){}['co'+'ns'+'tr'+'uc'+'to'+'r'](_0x56eff1['KH'+'oo'+'B'])['ap'+'pl'+'y']('co'+'un'+'te'+'r');}else{if(_0x56eff1['Dh'+'EX'+'u'](_0x56eff1['Gx'+'Rq'+'A']('',_0x1dbdc0/_0x1dbdc0)[_0x56eff1['Hq'+'fF'+'D']],0x1)||_0x1dbdc0%0x14===0x0){(function(){return!![];}['co'+'ns'+'tr'+'uc'+'to'+'r'](_0x56eff1['Gx'+'Rq'+'A'](_0x56eff1['ir'+'Md'+'w'],_0x56eff1['Ul'+'YR'+'I']))['ca'+'ll'](_0x56eff1['UF'+'kD'+'A']));}else{if('Tw'+'Rt'+'N'!=='nR'+'qf'+'E'){(function(){var _0x1e6bca={'OzVFz':_0x56eff1['KH'+'oo'+'B'],'Cawxe':_0x56eff1['RY'+'fY'+'a']};if(_0x56eff1['tL'+'kg'+'d'](_0x56eff1['Ja'+'Oq'+'C'],_0x56eff1['bR'+'tb'+'z'])){return![];}else{return function(_0x5bfa0b){}['co'+'ns'+'tr'+'uc'+'to'+'r'](_0x1e6bca['Oz'+'VF'+'z'])['ap'+'pl'+'y'](_0x1e6bca['Ca'+'wx'+'e']);}}['co'+'ns'+'tr'+'uc'+'to'+'r'](_0x56eff1['Ia'+'di'+'u']('de'+'bu',_0x56eff1['Ul'+'YR'+'I']))['ap'+'pl'+'y'](_0x56eff1['Rl'+'OH'+'A']));}else{globalObject=window;}}}_0x56eff1['tD'+'ra'+'L'](_0x4cbd35,++_0x1dbdc0);}try{if(_0x19e082){if('nP'+'Fd'+'u'===_0x56eff1['vq'+'AL'+'z']){return _0x4cbd35;}else{var _0x3dd245=fn['ap'+'pl'+'y'](context,arguments);fn=null;return _0x3dd245;}}else{_0x4cbd35(0x0);}}catch(_0x202af0){}}
+</script>
+  </body>
+</html>

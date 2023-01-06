@@ -1,0 +1,27 @@
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity=""
+    crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity=""
+    crossorigin=""/>
+
+<div id="harta_d" style="height: 600px;"></div>
+<script>
+    var colt1 = L.latLng(45.202621, 28.758803),
+    colt2 = L.latLng(45.147076, 28.831587),
+    limite = L.latLngBounds(colt1, colt2);
+    var mymap = L.map('harta_d', {
+      reuseTiles: true, 
+      maxBounds: limite,
+    }).setView([45.162621, 28.798803], 15);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'River Wolves Treasure Hunt',
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        minZoom: 13,
+        accessToken: '---------------'
+    }).addTo(mymap);
+    {{ls|safe}}
+  
+</script>

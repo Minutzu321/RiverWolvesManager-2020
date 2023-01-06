@@ -1,0 +1,39 @@
+<script>
+    getLocation();
+      var intervalId = setInterval(function() {
+          getLocation();
+      }, 6000);
+
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+
+      function sendpos(position) {
+        ws.send("%coord%"+position.coords.latitude+","+position.coords.longitude+","+position.coords.accuracy)
+      }
+      function error(err) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+              alert("Locatia trebuie sa fie activata si confirmata pentru a putea inregistra prezenta")
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert("Locatia nu este valabila. Asigura-te ca o ai activata.")
+              break;
+            case error.TIMEOUT:
+              alert("Request-ul a expirat. Incearca din nou.")
+              break;
+            case error.UNKNOWN_ERROR:
+              alert("A aparut o eroare neasteptata. Incearca din nou.")
+              break;
+          }
+      }
+      function getLocation() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(sendpos, error, options);
+          } else {
+              alert("Browserul nu poate obtine locatia")
+          }
+      }
+</script>

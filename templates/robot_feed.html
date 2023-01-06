@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>                                                                           
+<head>                                                                           
+    <title>Robot feed</title>                                                   
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8">     
+        $(document).ready(function(){                                                                                                            
+            if ("WebSocket" in window) {                                         
+                ws = new WebSocket("wss://" + document.domain + "/rvw-api/robotfeed"); 
+                ws.onopen = function() {
+                    ws.send("robotfeed");
+                }
+                const degrees = 0 % 360;      
+                ws.onmessage = function (msg) {
+                    var mesaj = msg.data;
+                    if(mesaj.startsWith("{")){
+                        console.log("primit");
+                    }else{
+                        const canvas = document.getElementById("cnv");
+                        const ctx = canvas.getContext("2d");
+
+                        const image = new Image();
+                        image.src = "data:image/jpeg;base64, "+mesaj;
+                        image.onload = function() {
+                            if (degrees === 180) {
+                                canvas.width = image.width;  
+                                canvas.height = image.height;
+                            } else {
+                                canvas.width = image.height;
+                                canvas.height = image.width;
+                            }
+                            ctx.rotate(degrees * Math.PI / 180);
+                            if (degrees === 90) {
+                                ctx.translate(0, -canvas.width);
+                            } else if (degrees === 180) {
+                                ctx.translate(-canvas.width, -canvas.height);
+                            } else if (degrees === 270) {
+                                ctx.translate(-canvas.height, 0);
+                            }
+                            // console.log(image.width);
+                            ctx.drawImage(image, 0, 0); 
+                }
+                };
+                // const degrees = 90 % 360;             
+                // ws.onmessage = function (msg) {  
+                //     const obj = JSON.parse(msg.data); 
+                //     const canvas = document.getElementById("cnv");
+                //     const ctx = canvas.getContext("2d");
+
+                //     const image = new Image();
+                //     image.src = "data:image/jpeg;base64, "+obj.feed;
+                //     image.onload = function() {
+                //         if (degrees === 180) {
+                //             canvas.width = image.width;  
+                //             canvas.height = image.height;
+                //         } else {
+                //             canvas.width = image.height;
+                //             canvas.height = image.width;
+                //         }
+                //         ctx.rotate(degrees * Math.PI / 180);
+                //         if (degrees === 90) {
+                //             ctx.translate(0, -canvas.width);
+                //         } else if (degrees === 180) {
+                //             ctx.translate(-canvas.width, -canvas.height);
+                //         } else if (degrees === 270) {
+                //             ctx.translate(-canvas.height, 0);
+                //         }
+                //         ctx.drawImage(image, 0, 0);  
+                //     };
+                //     console.log(obj.vuf)
+                //     console.log(obj.tf)
+                };                                                
+            } else {                                                             
+                alert("WebSocket not supported");                                
+            }                                                                    
+        });                                                                      
+    </script>                                                                    
+</head>                                                                          
+<body>
+    <canvas id="cnv"></canvas>                                                         
+</body>                                                                          
+</html>    
